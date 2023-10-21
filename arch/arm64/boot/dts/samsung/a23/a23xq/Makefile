@@ -24,22 +24,9 @@ define __sec_dtbo_build
 dtbo-$(2) += $(1)
 $(1)-base := $(3)
 endef
-
-define sec_dtbo_build
-$(foreach dtbo, $(1), $(eval $(call __sec_dtbo_build, $(dtbo),$(2),$(3))))
-endef
-
-# BLAIR BASE DTB
-QCOM_DTB := ../../../vendor/qcom
-SEC_BLAIR_BASE_DTB := $(QCOM_DTB)/blair.dtb
-
-# A23XQ
-#SEC_A23XQ_DTBO := \
-#	blair-sec.a23xq.overlay.00.dtbo
-
-#$(eval $(call sec_dtbo_build, \
-#	$(SEC_A23XQ_DTBO),$(CONFIG_ARCH_HOLI),$(SEC_BLAIR_BASE_DTB)))
 	
+always          := $(dtb-y)
+subdir-y        := $(dts-dirs)
 endif
 
 clean-files := *.dtb *.reverse.dts *.dtbo
