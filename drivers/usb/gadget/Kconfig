@@ -277,6 +277,12 @@ config USB_F_SS_MON_GADGET
 config USB_F_CONN_GADGET
 	tristate
 
+config USB_F_MTP
+	tristate
+
+config USB_F_PTP
+	tristate
+
 config USB_F_FS_IPC_LOGGING
 	bool "Enable IPC logging for FunctionFS"
 	depends on QGKI
@@ -644,6 +650,27 @@ config USB_LOW_MEM_VARIANT
 	  Enable this option if memory optimization is required for any
 	  low memory variant target. In such case memory needed to be
 	  allocated to buffers of various function drivers can be reduced.
+
+config USB_CONFIGFS_F_MTP
+	bool "MTP gadget"
+	select USB_F_MTP
+	depends on USB_CONFIGFS
+	help
+	  The Media Transfer Protocol (MTP) function mounts USB gadget
+	  as a media device but unlike Mass Storage Gadget, MTP operates
+	  at the file level. Thus exposing the relevant content but hiding
+	  the system/restricted files.
+
+config USB_CONFIGFS_F_PTP
+	bool "PTP gadget"
+	select USB_F_PTP
+	depends on USB_CONFIGFS && USB_CONFIGFS_F_MTP
+	help
+	  The Picture Transfer Protocol (PTP) function driver is a wrapper
+	  around MTP function driver. This function driver mounts USB gadget
+	  as a media device but unlike Mass Storage Gadget, PTP operates
+	  at the file level. Thus exposing the relevant content but hiding
+	  the system/restricted files.
 
 config USB_FUNC_WAKEUP_SUPPORTED
 	bool "USB Function Remote Wakeup support"
